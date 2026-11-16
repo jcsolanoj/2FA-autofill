@@ -1,0 +1,18 @@
+# OS & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies & Build
+node_modules/
+dist/
+build/
+*.zip
+*.crx
+*.pem
+
+# Secrets
+.env
+*.env.*
+*.2fabak

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2FA Autofill</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo-area">
+        <div class="logo-glow"></div>
+        <svg class="logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3zm-1 14l-3.5-3.5 1.41-1.41L11 13.17l4.59-4.59L17 10l-6 6z" fill="url(#logo-grad)"/>
+          <defs>
+            <linearGradient id="logo-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#0052D4"/>
+              <stop offset="0.5" stop-color="#4364F7"/>
+              <stop offset="1" stop-color="#6FB1FC"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="title-meta">
+          <h1>2FA Autofill</h1>
+          <span class="badge">Multi-Site</span>
+        </div>
+      </div>
+    </header>
+
+    <nav class="app-tabs">
+      <button class="tab-btn active" id="tab-accounts" type="button">Mis Cuentas</button>
+      <button class="tab-btn" id="tab-add" type="button">Agregar Cuenta</button>
+    </nav>
+
+    <main class="app-main">
+      <section class="tab-content active" id="content-accounts">
+        <div class="accounts-wrapper">
+          <div id="empty-state" class="empty-state">
+            <div class="empty-icon">🛡️</div>
+            <p>No tienes cuentas configuradas.</p>
+            <button class="btn btn-secondary btn-sm" id="btn-go-to-add" type="button">Agregar primera cuenta</button>
+          </div>
+          <div id="accounts-list" class="accounts-list"></div>
+        </div>
+      </section>
+
+      <section class="tab-content" id="content-add">
+        <form id="add-account-form" class="form-container">
+          <div class="form-group">
+            <label for="input-email">Usuario / Correo o Alias</label>
+            <input type="text" id="input-email" placeholder="usuario@tu-empresa.com" required autocomplete="off">
+            <span class="field-hint">Usuario usado en el portal o un alias descriptivo.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-origin">Dominio / Origen del Portal (opcional)</label>
+            <div class="origin-row">
+              <input type="url" id="input-origin" placeholder="https://login.tu-empresa.com" autocomplete="off">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-use-current-tab" title="Usar origen de la pestaña actual">Pestaña</button>
+            </div>
+            <span class="field-hint">Necesario para autocompletado automático en ese dominio.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-secret">Clave Secreta 2FA (Base32 o URI otpauth://)</label>
+            <div class="input-wrapper">
+              <input type="password" id="input-secret" placeholder="JBSWY3DPEHPK3PXP" required autocomplete="off">
+              <button type="button" class="btn-toggle-visibility" id="btn-toggle-secret" title="Mostrar/Ocultar">👁️</button>
+            </div>
+            <span class="field-hint">Clave manual Base32 o enlace otpauth://totp/... provisto al activar 2FA.</span>
+          </div>
+
+          <div class="checkbox-row">
+            <input type="checkbox" id="input-autosubmit">
+            <label for="input-autosubmit">Enviar formulario automáticamente tras rellenar (auto-submit)</label>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-block">
+              <span>Guardar Cuenta</span>
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="toast" class="toast"></div>
+
+    <footer class="app-footer">
+      <p>Almacenado localmente en tu navegador. Usa solo en equipos confiables.</p>
+    </footer>
+  </div>
+
+  <script src="totp.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
